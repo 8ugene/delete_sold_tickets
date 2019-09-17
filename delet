@@ -1,0 +1,94 @@
+Login()
+{
+	#include "login50user.h"
+	
+	return 0;
+}
+
+Action()
+{
+
+	
+	int i;
+
+ 	web_reg_save_param("c_flightids",
+   "lb=<input type=\"hidden\" name=\"flightID\" value=\"", 
+   "rb=\"  />",
+   "ord=all", 
+   LAST);
+	
+	web_reg_save_param("c_cgifields",
+   "lb=<input type=\"hidden\" name=\".cgifields\" value=\"",
+   "rb=\"  />",
+   "ord=all",
+   LAST);
+		 
+	lr_think_time(16);
+
+	lr_start_transaction("quest");
+
+	web_concurrent_start(NULL);
+	
+	web_custom_request("itinerary.pl", 
+		"URL=http://127.0.0.1:1080/cgi-bin/itinerary.pl", 
+		"Method=GET", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=itinerary", 
+		"Snapshot=t174.inf", 
+		"Mode=HTTP", 
+		LAST);
+	
+	web_concurrent_end(NULL);
+
+	lr_think_time(4);
+	
+	lr_end_transaction("quest",LR_AUTO);
+	 
+		
+	lr_save_string("", "c_block");
+	
+	lr_param_sprintf("c_block",                    
+		lr_eval_string("{c_block}"));
+ 	
+	for (i=1;i<=atoi(lr_eval_string("{c_flightids_count}"));i++)
+		
+	{
+ 	lr_param_sprintf("c_block",
+		"%sflightID=%s&",
+		lr_eval_string("{c_block}"),
+    	lr_paramarr_idx("c_flightids",i));
+	
+    lr_param_sprintf("c_block",
+    	"%s.cgifields=%s&",
+   		 lr_eval_string("{c_block}"),
+   		 lr_paramarr_idx("c_cgifields", i));
+	}
+
+	lr_save_string(lr_eval_string("{c_block}removeAllFlights.x=74&removeAllFlights.y=6"),
+   "c_remove");
+
+	lr_start_transaction("remove");
+
+	web_custom_request("itinerary.pl_2", 
+		"URL=http://127.0.0.1:1080/cgi-bin/itinerary.pl", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/itinerary.pl", 
+		"Snapshot=t177.inf", 
+		"Mode=HTTP", 
+		"Body={c_remove}",
+		LAST);
+
+	lr_end_transaction("remove", LR_AUTO);
+
+	lr_think_time(9);
+
+	return 0;
+LogQut()
+{
+	#include "LogQut.h"
+  
+	return 0;
+}
