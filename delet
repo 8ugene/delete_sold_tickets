@@ -1,16 +1,13 @@
 Login()
 {
-	#include "login50user.h"
-	
+	#include "login50user.h"	
 	return 0;
 }
 
 Action()
 {
-
-	
 	int i;
-
+	
  	web_reg_save_param("c_flightids",
    "lb=<input type=\"hidden\" name=\"flightID\" value=\"", 
    "rb=\"  />",
@@ -44,8 +41,7 @@ Action()
 	lr_think_time(4);
 	
 	lr_end_transaction("quest",LR_AUTO);
-	 
-		
+	 	
 	lr_save_string("", "c_block");
 	
 	lr_param_sprintf("c_block",                    
