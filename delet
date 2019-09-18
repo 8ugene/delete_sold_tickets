@@ -61,7 +61,7 @@ Action()
    		 lr_paramarr_idx("c_cgifields", i));
 	}
 
-	lr_save_string(lr_eval_string("{c_c_buffer}removeAllFlights.x=74&removeAllFlights.y=6"),
+	lr_save_string(lr_eval_string("{c_buffer}removeAllFlights.x=74&removeAllFlights.y=6"),
    "c_remove");
 
 	lr_start_transaction("remove");
