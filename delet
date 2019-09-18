@@ -42,26 +42,26 @@ Action()
 	
 	lr_end_transaction("quest",LR_AUTO);
 	 	
-	lr_save_string("", "c_block");
+	lr_save_string("", "c_buffer");
 	
-	lr_param_sprintf("c_block",                    
-		lr_eval_string("{c_block}"));
+	lr_param_sprintf("c_buffer",                    
+		lr_eval_string("{c_buffer}"));
  	
 	for (i=1;i<=atoi(lr_eval_string("{c_flightids_count}"));i++)
 		
 	{
- 	lr_param_sprintf("c_block",
+ 	lr_param_sprintf("c_buffer",
 		"%sflightID=%s&",
-		lr_eval_string("{c_block}"),
+		lr_eval_string("{c_buffer}"),
     	lr_paramarr_idx("c_flightids",i));
 	
-    lr_param_sprintf("c_block",
+    lr_param_sprintf("c_buffer",
     	"%s.cgifields=%s&",
-   		 lr_eval_string("{c_block}"),
+   		 lr_eval_string("{c_buffer"),
    		 lr_paramarr_idx("c_cgifields", i));
 	}
 
-	lr_save_string(lr_eval_string("{c_block}removeAllFlights.x=74&removeAllFlights.y=6"),
+	lr_save_string(lr_eval_string("{c_c_buffer}removeAllFlights.x=74&removeAllFlights.y=6"),
    "c_remove");
 
 	lr_start_transaction("remove");
